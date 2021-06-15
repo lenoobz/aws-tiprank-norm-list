@@ -7,6 +7,7 @@ import (
 	logger "github.com/hthl85/aws-lambda-logger"
 	"github.com/hthl85/aws-tiprank-norm-list/consts"
 	"github.com/hthl85/aws-tiprank-norm-list/entities"
+	"github.com/hthl85/aws-tiprank-norm-list/utils/ticker"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -40,7 +41,7 @@ func NewAssetModel(ctx context.Context, l logger.ContextLog, e *entities.TipRank
 	m.Type = strings.ToUpper(consts.SECURITY_TYPE)
 	m.AssetClass = strings.ToUpper(consts.ASSET_CLASS)
 
-	m.Ticker = e.Ticker
+	m.Ticker = ticker.GenYahooTickerFromTipRankTicker(e.Ticker)
 
 	if e.Name != "" {
 		m.Name = e.Name
