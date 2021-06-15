@@ -104,7 +104,7 @@ func (r *AssetMongo) InsertAsset(ctx context.Context, fund *entities.TipRankDivi
 	}
 
 	// what collection we are going to use
-	colname, ok := r.conf.Colnames[consts.ASSET_DIVIDENDS_COLLECTION]
+	colname, ok := r.conf.Colnames[consts.ASSETS_COLLECTION]
 	if !ok {
 		r.log.Error(ctx, "cannot find collection name")
 		return fmt.Errorf("cannot find collection name")
