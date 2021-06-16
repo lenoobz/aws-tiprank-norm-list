@@ -21,8 +21,14 @@ func NewService(repo Repo, log logger.ContextLog) *Service {
 	}
 }
 
+// FindTipRankAssetsByTickers finds all tip rank assets by given tickers
+func (s *Service) FindTipRankAssetsByTickers(ctx context.Context, tickers []string) ([]*entities.TipRankAsset, error) {
+	s.log.Info(ctx, "find TipRank assets by tickers", "tickers", tickers)
+	return s.repo.FindTipRankAssetsByTickers(ctx, tickers)
+}
+
 // FindTipRankAssets finds all tip rank assets
-func (s *Service) FindTipRankAssets(ctx context.Context, tickers []string) ([]*entities.TipRankAsset, error) {
-	s.log.Info(ctx, "find all tip rank assets")
-	return s.repo.FindTipRankAssets(ctx, tickers)
+func (s *Service) FindTipRankAssets(ctx context.Context) ([]*entities.TipRankAsset, error) {
+	s.log.Info(ctx, "find all TipRank assets")
+	return s.repo.FindTipRankAssets(ctx)
 }

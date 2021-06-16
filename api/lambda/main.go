@@ -51,7 +51,7 @@ func lambdaHandler(ctx context.Context, req TipRankDividendRequest) {
 	assetService := assets.NewService(assetRepo, *tiprankService, zap)
 
 	// try correlation context
-	if err := assetService.InsertAssets(ctx, req.Tickers); err != nil {
+	if err := assetService.InsertAssetsByTickers(ctx, req.Tickers); err != nil {
 		log.Fatal("insert assets failed")
 	}
 }
