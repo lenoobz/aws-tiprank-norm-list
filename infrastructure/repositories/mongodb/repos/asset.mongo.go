@@ -24,11 +24,11 @@ type AssetMongo struct {
 }
 
 // NewAssetMongo creates new asset mongo repo
-func NewAssetMongo(db *mongo.Database, l logger.ContextLog, conf *config.MongoConfig) (*AssetMongo, error) {
+func NewAssetMongo(db *mongo.Database, log logger.ContextLog, conf *config.MongoConfig) (*AssetMongo, error) {
 	if db != nil {
 		return &AssetMongo{
 			db:   db,
-			log:  l,
+			log:  log,
 			conf: conf,
 		}, nil
 	}
@@ -68,7 +68,7 @@ func NewAssetMongo(db *mongo.Database, l logger.ContextLog, conf *config.MongoCo
 	return &AssetMongo{
 		db:     client.Database(conf.Dbname),
 		client: client,
-		log:    l,
+		log:    log,
 		conf:   conf,
 	}, nil
 }
@@ -92,12 +92,12 @@ func (r *AssetMongo) Close() {
 ///////////////////////////////////////////////////////////
 
 // InsertAsset insert new asset
-func (r *AssetMongo) InsertAsset(ctx context.Context, fund *entities.TipRankDividend) error {
+func (r *AssetMongo) InsertAsset(ctx context.Context, asset *entities.TipRankAsset) error {
 	// create new context for the query
 	ctx, cancel := createContext(ctx, r.conf.TimeoutMS)
 	defer cancel()
 
-	m, err := models.NewAssetModel(ctx, r.log, fund)
+	m, err := models.NewAssetModel(ctx, r.log, asset)
 	if err != nil {
 		r.log.Error(ctx, "create model failed", "error", err)
 		return err

@@ -34,7 +34,7 @@ type AssetModel struct {
 }
 
 // NewAssetModel create stock model
-func NewAssetModel(ctx context.Context, l logger.ContextLog, e *entities.TipRankDividend) (*AssetModel, error) {
+func NewAssetModel(ctx context.Context, l logger.ContextLog, e *entities.TipRankAsset) (*AssetModel, error) {
 	var m = &AssetModel{}
 
 	m.Source = strings.ToUpper(consts.DATA_SOURCE)
