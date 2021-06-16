@@ -19,5 +19,5 @@ type TipRankDividend struct {
 	Dividend       float64    `json:"dividend,omitempty"`
 	ExDividendDate *time.Time `json:"exDividendDate,omitempty"`
 	RecordDate     *time.Time `json:"recordDate,omitempty"`
-	DividendDate   *time.Time `json:"payoutDate,omitempty"`
+	PayoutDate     *time.Time `json:"payoutDate,omitempty"`
 }
