@@ -9,7 +9,7 @@ import (
 	"github.com/hthl85/aws-tiprank-norm-list/config"
 	"github.com/hthl85/aws-tiprank-norm-list/infrastructure/repositories/mongodb/repos"
 	"github.com/hthl85/aws-tiprank-norm-list/usecase/assets"
-	"github.com/hthl85/aws-tiprank-norm-list/usecase/tiprank-assets"
+	"github.com/hthl85/aws-tiprank-norm-list/usecase/tiprank"
 )
 
 type TipRankDividendRequest struct {
@@ -33,9 +33,9 @@ func lambdaHandler(ctx context.Context, req TipRankDividendRequest) {
 	defer zap.Close()
 
 	// create new repository
-	tiprankRepo, err := repos.NewTipRankAssetMongo(nil, zap, &appConf.Mongo)
+	tiprankRepo, err := repos.NewTipRankDividendMongo(nil, zap, &appConf.Mongo)
 	if err != nil {
-		log.Fatalf("create TipRank asset mongo failed: %v\n", err)
+		log.Fatalf("create TipRank dividend mongo failed: %v\n", err)
 	}
 	defer tiprankRepo.Close()
 

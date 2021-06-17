@@ -16,7 +16,7 @@ type Reader interface {
 
 // Writer interface
 type Writer interface {
-	InsertAsset(context.Context, *entities.TipRankAsset) error
+	InsertAsset(context.Context, *entities.TipRankDividend) error
 }
 
 // Repo interface

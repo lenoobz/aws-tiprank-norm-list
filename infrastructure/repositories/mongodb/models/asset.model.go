@@ -2,7 +2,9 @@ package models
 
 import (
 	"context"
+	"sort"
 	"strings"
+	"time"
 
 	logger "github.com/hthl85/aws-lambda-logger"
 	"github.com/hthl85/aws-tiprank-norm-list/consts"
@@ -14,9 +16,10 @@ import (
 // AssetModel struct
 type AssetModel struct {
 	ID               *primitive.ObjectID `bson:"_id,omitempty"`
-	IsActive         bool                `bson:"isActive,omitempty"`
 	CreatedAt        int64               `bson:"createdAt,omitempty"`
 	ModifiedAt       int64               `bson:"modifiedAt,omitempty"`
+	Enabled          bool                `bson:"enabled"`
+	Deleted          bool                `bson:"deleted"`
 	Schema           string              `bson:"schema,omitempty"`
 	Source           string              `bson:"source,omitempty"`
 	Ticker           string              `bson:"ticker,omitempty"`
@@ -34,8 +37,13 @@ type AssetModel struct {
 }
 
 // NewAssetModel create stock model
-func NewAssetModel(ctx context.Context, l logger.ContextLog, e *entities.TipRankAsset) (*AssetModel, error) {
-	var m = &AssetModel{}
+func NewAssetModel(ctx context.Context, l logger.ContextLog, e *entities.TipRankDividend, schemaVersion string) (*AssetModel, error) {
+	var m = &AssetModel{
+		ModifiedAt: time.Now().UTC().Unix(),
+		Enabled:    true,
+		Deleted:    false,
+		Schema:     schemaVersion,
+	}
 
 	m.Source = strings.ToUpper(consts.DATA_SOURCE)
 	m.Type = strings.ToUpper(consts.SECURITY_TYPE)
@@ -55,10 +63,50 @@ func NewAssetModel(ctx context.Context, l logger.ContextLog, e *entities.TipRank
 	m.AllocationBond = 0
 	m.AllocationCash = 0
 
-	// m.DividendSchedule = e.DividendSchedule
 	// m.Yield12Month = e.Yield12Month
 	m.DistYield = e.Yield
 	m.DistAmount = e.Amount
+	m.DividendSchedule = calculateDividendSchedule(e.DividendHistory)
 
 	return m, nil
+}
+
+func calculateDividendSchedule(dividends map[int64]*entities.DividendHistory) string {
+	type kv struct {
+		Key   int64
+		Value time.Time
+	}
+
+	var ss []kv
+	for k, v := range dividends {
+		ss = append(ss, kv{k, *v.ExDividendDate})
+	}
+
+	if len(ss) < 2 {
+		return "UNKNOWN"
+	}
+
+	sort.Slice(ss, func(i, j int) bool {
+		return ss[i].Value.Sub(ss[j].Value) > 0
+	})
+
+	diff := ss[0].Value.Sub(ss[1].Value).Seconds() / 86400
+
+	if diff > 80 && diff < 100 {
+		return "QUARTERLY"
+	}
+
+	if diff > 25 && diff < 35 {
+		return "MONTHLY"
+	}
+
+	if diff > 175 && diff > 195 {
+		return "BI-ANNUALLY"
+	}
+
+	if diff > 355 && diff < 375 {
+		return "ANNUALLY"
+	}
+
+	return "UNKNOWN"
 }

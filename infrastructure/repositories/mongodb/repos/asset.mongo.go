@@ -92,12 +92,12 @@ func (r *AssetMongo) Close() {
 ///////////////////////////////////////////////////////////
 
 // InsertAsset insert new asset
-func (r *AssetMongo) InsertAsset(ctx context.Context, asset *entities.TipRankAsset) error {
+func (r *AssetMongo) InsertAsset(ctx context.Context, asset *entities.TipRankDividend) error {
 	// create new context for the query
 	ctx, cancel := createContext(ctx, r.conf.TimeoutMS)
 	defer cancel()
 
-	m, err := models.NewAssetModel(ctx, r.log, asset)
+	m, err := models.NewAssetModel(ctx, r.log, asset, r.conf.SchemaVersion)
 	if err != nil {
 		r.log.Error(ctx, "create model failed", "error", err)
 		return err
@@ -110,10 +110,6 @@ func (r *AssetMongo) InsertAsset(ctx context.Context, asset *entities.TipRankAss
 		return fmt.Errorf("cannot find collection name")
 	}
 	col := r.db.Collection(colname)
-
-	m.IsActive = true
-	m.Schema = r.conf.SchemaVersion
-	m.ModifiedAt = time.Now().UTC().Unix()
 
 	filter := bson.D{{
 		Key:   "ticker",

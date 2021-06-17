@@ -12,8 +12,8 @@ import (
 
 // Reader interface
 type Reader interface {
-	FindTipRankAssets(context.Context) ([]*entities.TipRankAsset, error)
-	FindTipRankAssetsByTickers(context.Context, []string) ([]*entities.TipRankAsset, error)
+	FindTipRankAssets(context.Context) ([]*entities.TipRankDividend, error)
+	FindTipRankAssetsByTickers(context.Context, []string) ([]*entities.TipRankDividend, error)
 }
 
 // Writer interface

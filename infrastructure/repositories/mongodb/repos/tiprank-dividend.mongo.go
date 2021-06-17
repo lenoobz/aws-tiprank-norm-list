@@ -14,18 +14,18 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-// TipRankAssetMongo struct
-type TipRankAssetMongo struct {
+// TipRankDividendMongo struct
+type TipRankDividendMongo struct {
 	db     *mongo.Database
 	client *mongo.Client
 	log    logger.ContextLog
 	conf   *config.MongoConfig
 }
 
-// NewTipRankAssetMongo creates new TipRank dividend mongo repo
-func NewTipRankAssetMongo(db *mongo.Database, log logger.ContextLog, conf *config.MongoConfig) (*TipRankAssetMongo, error) {
+// NewTipRankDividendMongo creates new TipRank dividend mongo repo
+func NewTipRankDividendMongo(db *mongo.Database, log logger.ContextLog, conf *config.MongoConfig) (*TipRankDividendMongo, error) {
 	if db != nil {
-		return &TipRankAssetMongo{
+		return &TipRankDividendMongo{
 			db:   db,
 			log:  log,
 			conf: conf,
@@ -64,7 +64,7 @@ func NewTipRankAssetMongo(db *mongo.Database, log logger.ContextLog, conf *confi
 		return nil, err
 	}
 
-	return &TipRankAssetMongo{
+	return &TipRankDividendMongo{
 		db:     client.Database(conf.Dbname),
 		client: client,
 		log:    log,
@@ -73,7 +73,7 @@ func NewTipRankAssetMongo(db *mongo.Database, log logger.ContextLog, conf *confi
 }
 
 // Close disconnect from database
-func (r *TipRankAssetMongo) Close() {
+func (r *TipRankDividendMongo) Close() {
 	ctx := context.Background()
 	r.log.Info(ctx, "close mongo client")
 
@@ -91,7 +91,7 @@ func (r *TipRankAssetMongo) Close() {
 ///////////////////////////////////////////////////////////////////////////////
 
 // FindTipRankAssetsByTickers finds TipRank assets by tickers
-func (r *TipRankAssetMongo) FindTipRankAssetsByTickers(ctx context.Context, tickers []string) ([]*entities.TipRankAsset, error) {
+func (r *TipRankDividendMongo) FindTipRankAssetsByTickers(ctx context.Context, tickers []string) ([]*entities.TipRankDividend, error) {
 	if len(tickers) < 1 {
 		return nil, nil
 	}
@@ -145,12 +145,12 @@ func (r *TipRankAssetMongo) FindTipRankAssetsByTickers(ctx context.Context, tick
 		return nil, err
 	}
 
-	var tiprankAssets []*entities.TipRankAsset
+	var tiprankAssets []*entities.TipRankDividend
 
 	// iterate over the cursor to decode document one at a time
 	for cur.Next(ctx) {
 		// decode cursor to activity model
-		var tiprankAsset entities.TipRankAsset
+		var tiprankAsset entities.TipRankDividend
 		if err = cur.Decode(&tiprankAsset); err != nil {
 			r.log.Error(ctx, "decode failed", "error", err)
 			return nil, err
@@ -168,7 +168,7 @@ func (r *TipRankAssetMongo) FindTipRankAssetsByTickers(ctx context.Context, tick
 }
 
 // FindTipRankAssets finds all TipRank assets
-func (r *TipRankAssetMongo) FindTipRankAssets(ctx context.Context) ([]*entities.TipRankAsset, error) {
+func (r *TipRankDividendMongo) FindTipRankAssets(ctx context.Context) ([]*entities.TipRankDividend, error) {
 	// create new context for the query
 	ctx, cancel := createContext(ctx, r.conf.TimeoutMS)
 	defer cancel()
@@ -204,12 +204,12 @@ func (r *TipRankAssetMongo) FindTipRankAssets(ctx context.Context) ([]*entities.
 		return nil, err
 	}
 
-	var tiprankAssets []*entities.TipRankAsset
+	var tiprankAssets []*entities.TipRankDividend
 
 	// iterate over the cursor to decode document one at a time
 	for cur.Next(ctx) {
 		// decode cursor to activity model
-		var tiprankAsset entities.TipRankAsset
+		var tiprankAsset entities.TipRankDividend
 		if err = cur.Decode(&tiprankAsset); err != nil {
 			r.log.Error(ctx, "decode failed", "error", err)
 			return nil, err

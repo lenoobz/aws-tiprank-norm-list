@@ -4,18 +4,18 @@ import (
 	"time"
 )
 
-// TipRankAsset struct
-type TipRankAsset struct {
+// TipRankDividend struct
+type TipRankDividend struct {
 	Ticker          string                     `json:"ticker,omitempty"`
 	Name            string                     `json:"name,omitempty"`
 	Yield           float64                    `json:"yield,omitempty"`
 	Amount          float64                    `json:"amount,omitempty"`
 	Currency        string                     `json:"currency,omitempty"`
-	DividendHistory map[int64]*TipRankDividend `json:"dividendHistory,omitempty"`
+	DividendHistory map[int64]*DividendHistory `json:"dividendHistory,omitempty"`
 }
 
-// TipRankDividend struct
-type TipRankDividend struct {
+// DividendHistory struct
+type DividendHistory struct {
 	Dividend       float64    `json:"dividend,omitempty"`
 	ExDividendDate *time.Time `json:"exDividendDate,omitempty"`
 	RecordDate     *time.Time `json:"recordDate,omitempty"`

@@ -4,7 +4,7 @@ import (
 	"context"
 
 	logger "github.com/hthl85/aws-lambda-logger"
-	"github.com/hthl85/aws-tiprank-norm-list/usecase/tiprank-assets"
+	"github.com/hthl85/aws-tiprank-norm-list/usecase/tiprank"
 )
 
 // Service sector
@@ -15,9 +15,9 @@ type Service struct {
 }
 
 // NewService create new service
-func NewService(dividendRepo Repo, tiprankService tiprank.Service, log logger.ContextLog) *Service {
+func NewService(assetRepo Repo, tiprankService tiprank.Service, log logger.ContextLog) *Service {
 	return &Service{
-		assetRepo:      dividendRepo,
+		assetRepo:      assetRepo,
 		tiprankService: tiprankService,
 		log:            log,
 	}
@@ -25,16 +25,16 @@ func NewService(dividendRepo Repo, tiprankService tiprank.Service, log logger.Co
 
 // InsertAssetDividends adds new assets by tickers
 func (s *Service) InsertAssetsByTickers(ctx context.Context, tickers []string) error {
-	s.log.Info(ctx, "add new asset", "tickers", tickers)
+	s.log.Info(ctx, "adding new asset", "tickers", tickers)
 
-	assets, err := s.tiprankService.FindTipRankAssetsByTickers(ctx, tickers)
+	dividends, err := s.tiprankService.FindTipRankDividendsByTickers(ctx, tickers)
 	if err != nil {
-		s.log.Error(ctx, "find all TipRank assets by tickers failed", "error", err)
+		s.log.Error(ctx, "find all TipRank dividends by tickers failed", "error", err)
 	}
 
-	for _, asset := range assets {
-		if err := s.assetRepo.InsertAsset(ctx, asset); err != nil {
-			s.log.Error(ctx, "insert asset", "error", err)
+	for _, dividend := range dividends {
+		if err := s.assetRepo.InsertAsset(ctx, dividend); err != nil {
+			s.log.Error(ctx, "insert asset failed", "error", err)
 			return err
 		}
 	}
@@ -44,16 +44,16 @@ func (s *Service) InsertAssetsByTickers(ctx context.Context, tickers []string) e
 
 // InsertAssets adds new assets
 func (s *Service) InsertAssets(ctx context.Context) error {
-	s.log.Info(ctx, "add new asset")
+	s.log.Info(ctx, "adding new asset")
 
-	assets, err := s.tiprankService.FindTipRankAssets(ctx)
+	dividends, err := s.tiprankService.FindTipRankDividends(ctx)
 	if err != nil {
-		s.log.Error(ctx, "find all TipRank assets failed", "error", err)
+		s.log.Error(ctx, "find all TipRank dividends failed", "error", err)
 	}
 
-	for _, asset := range assets {
-		if err := s.assetRepo.InsertAsset(ctx, asset); err != nil {
-			s.log.Error(ctx, "insert asset", "error", err)
+	for _, dividend := range dividends {
+		if err := s.assetRepo.InsertAsset(ctx, dividend); err != nil {
+			s.log.Error(ctx, "insert asset failed", "error", err)
 			return err
 		}
 	}
