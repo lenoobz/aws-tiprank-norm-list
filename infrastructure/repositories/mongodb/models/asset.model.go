@@ -6,10 +6,10 @@ import (
 	"strings"
 	"time"
 
-	logger "github.com/hthl85/aws-lambda-logger"
-	"github.com/hthl85/aws-tiprank-norm-list/consts"
-	"github.com/hthl85/aws-tiprank-norm-list/entities"
-	"github.com/hthl85/aws-tiprank-norm-list/utils/ticker"
+	logger "github.com/lenoobz/aws-lambda-logger"
+	"github.com/lenoobz/aws-tiprank-norm-list/consts"
+	"github.com/lenoobz/aws-tiprank-norm-list/entities"
+	"github.com/lenoobz/aws-tiprank-norm-list/utils/ticker"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 

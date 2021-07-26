@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/hthl85/aws-tiprank-norm-list/consts"
+	"github.com/lenoobz/aws-tiprank-norm-list/consts"
 )
 
 // GenYahooTickerFromTipRankTicker gen yahoo ticker from tip rank ticker

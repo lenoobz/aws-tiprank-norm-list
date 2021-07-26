@@ -3,8 +3,8 @@ package assets
 import (
 	"context"
 
-	logger "github.com/hthl85/aws-lambda-logger"
-	"github.com/hthl85/aws-tiprank-norm-list/usecase/tiprank"
+	logger "github.com/lenoobz/aws-lambda-logger"
+	"github.com/lenoobz/aws-tiprank-norm-list/usecase/tiprank"
 )
 
 // Service sector

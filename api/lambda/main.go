@@ -5,11 +5,11 @@ import (
 	"log"
 
 	"github.com/aws/aws-lambda-go/lambda"
-	logger "github.com/hthl85/aws-lambda-logger"
-	"github.com/hthl85/aws-tiprank-norm-list/config"
-	"github.com/hthl85/aws-tiprank-norm-list/infrastructure/repositories/mongodb/repos"
-	"github.com/hthl85/aws-tiprank-norm-list/usecase/assets"
-	"github.com/hthl85/aws-tiprank-norm-list/usecase/tiprank"
+	logger "github.com/lenoobz/aws-lambda-logger"
+	"github.com/lenoobz/aws-tiprank-norm-list/config"
+	"github.com/lenoobz/aws-tiprank-norm-list/infrastructure/repositories/mongodb/repos"
+	"github.com/lenoobz/aws-tiprank-norm-list/usecase/assets"
+	"github.com/lenoobz/aws-tiprank-norm-list/usecase/tiprank"
 )
 
 type TipRankDividendRequest struct {

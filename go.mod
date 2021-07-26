@@ -1,4 +1,4 @@
-module github.com/hthl85/aws-tiprank-norm-list
+module github.com/lenoobz/aws-tiprank-norm-list
 
 go 1.16
 
@@ -7,8 +7,8 @@ require (
 	github.com/aws/aws-sdk-go v1.38.61 // indirect
 	github.com/google/go-cmp v0.5.6 // indirect
 	github.com/google/uuid v1.2.0
-	github.com/hthl85/aws-lambda-corid v0.0.0-20210303072659-7fd2001b40b7
-	github.com/hthl85/aws-lambda-logger v0.0.0-20210304034759-41e8c020b8a8
+	github.com/lenoobz/aws-lambda-corid v0.0.0-20210303072659-7fd2001b40b7
+	github.com/lenoobz/aws-lambda-logger v0.0.0-20210304034759-41e8c020b8a8
 	github.com/klauspost/compress v1.13.1 // indirect
 	github.com/youmark/pkcs8 v0.0.0-20201027041543-1326539a0a0a // indirect
 	go.mongodb.org/mongo-driver v1.5.3

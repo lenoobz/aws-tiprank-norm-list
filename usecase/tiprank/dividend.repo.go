@@ -3,7 +3,7 @@ package tiprank
 import (
 	"context"
 
-	"github.com/hthl85/aws-tiprank-norm-list/entities"
+	"github.com/lenoobz/aws-tiprank-norm-list/entities"
 )
 
 ///////////////////////////////////////////////////////////

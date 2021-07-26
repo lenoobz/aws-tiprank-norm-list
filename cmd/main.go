@@ -5,12 +5,12 @@ import (
 	"log"
 
 	"github.com/google/uuid"
-	corid "github.com/hthl85/aws-lambda-corid"
-	logger "github.com/hthl85/aws-lambda-logger"
-	"github.com/hthl85/aws-tiprank-norm-list/config"
-	"github.com/hthl85/aws-tiprank-norm-list/infrastructure/repositories/mongodb/repos"
-	"github.com/hthl85/aws-tiprank-norm-list/usecase/assets"
-	"github.com/hthl85/aws-tiprank-norm-list/usecase/tiprank"
+	corid "github.com/lenoobz/aws-lambda-corid"
+	logger "github.com/lenoobz/aws-lambda-logger"
+	"github.com/lenoobz/aws-tiprank-norm-list/config"
+	"github.com/lenoobz/aws-tiprank-norm-list/infrastructure/repositories/mongodb/repos"
+	"github.com/lenoobz/aws-tiprank-norm-list/usecase/assets"
+	"github.com/lenoobz/aws-tiprank-norm-list/usecase/tiprank"
 )
 
 func main() {
