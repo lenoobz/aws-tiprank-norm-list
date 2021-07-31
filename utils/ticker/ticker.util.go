@@ -22,7 +22,7 @@ func GenYahooTickerFromTipRankTicker(tiprankTicker string) string {
 		}
 	}
 
-	return fmt.Sprintf("%s.TO", tiprankTicker)
+	return tiprankTicker
 }
 
 // getSpecialYahooTicker gets special yahoo ticker from a given tiprank ticker
